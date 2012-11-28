@@ -172,6 +172,14 @@ class Money
         }
     }
 
+    public function abs() {
+		if($this->isNegative()) {
+			return $this->multiply(-1);
+		} else {
+			return $this;
+		}
+	}
+
     public function multiply($multiplier, $rounding_mode = self::ROUND_HALF_UP)
     {
         $this->assertOperand($multiplier);
