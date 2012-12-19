@@ -19,6 +19,7 @@ class Currency
     const USD = 'USD';
     const GBP = 'GBP';
     const JPY = 'JPY';
+    const SEK = 'SEK';
 
     public function __construct($name)
     {
