@@ -241,6 +241,10 @@ class Money
         return $this->units < 0;
     }
 
+	public static function newFromString($string, $currency) {
+		return new self(self::stringToUnits((string) $string), $currency);
+	}
+
     /** @return int */
     public static function stringToUnits( $string )
     {
@@ -256,3 +260,4 @@ class Money
         return (int) $units;
     }
 }
+
