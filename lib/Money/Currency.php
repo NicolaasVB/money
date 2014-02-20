@@ -22,6 +22,7 @@ class Currency
     const SEK = 'SEK';
     const DKK = 'DKK';
 	const AUD = 'AUD';
+    const CHF = 'CHF';
 
     public function __construct($name)
     {
