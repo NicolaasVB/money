@@ -248,16 +248,25 @@ class Money
     /** @return int */
     public static function stringToUnits( $string )
     {
-        //@todo extend the regular expression with grouping characters and eventualy currencies
-        if (!preg_match("/(-)?(\d*)([.,])?(\d)?(\d)?/", $string, $matches)) {
-            throw new InvalidArgumentException("The value could not be parsed as money");
+        if(is_float($string) || is_integer($string)) {
+            return (int) ($string * 100);
         }
-        $units = $matches[1] == "-" ? "-" : "";
-        $units .= $matches[2] == '' ? '0' : $matches[2];
-        $units .= isset($matches[4]) ? $matches[4] : "0";
-        $units .= isset($matches[5]) ? $matches[5] : "0";
 
-        return (int) $units;
+        $string = str_replace(' ', '', trim($string));
+        if (strpos($string, '.') === 0) {
+            $string = '0' . $string;
+        } elseif (strpos($string, ',') === 0) {
+            $string = '0' . $string;
+        } elseif (strpos($string, '-.') === 0) {
+            $string = str_replace('-.', '-0.', $string);
+        } elseif (strpos($string, '-,') === 0) {
+            $string = str_replace('-,', '-0,', $string);
+        }
+
+        if (strpos($string, '.') > strpos($string, ',')) {
+            return (int) ((float) str_replace(',', '', $string) * 100);
+        }
+        return (int) ((float) str_replace(',', '.', str_replace('.', '', $string)) * 100);
     }
 }
 
